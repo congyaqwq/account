@@ -15,6 +15,7 @@ yarn serve
 ### 简介
 
 多人共同消费时可以帮助计算各自的开销
+主要使用库：vue3.0，antdesign2.0
 
 ### 应用场景
 
@@ -31,6 +32,6 @@ b,c,d 晚上吃了烧烤
 
 ### 应用截图
 
-![avatar](https://img1.halobear.com/wedding/FkGM0Uc9SegxzeyaJ0Vg28D404vg.png)
-![avatar](https://img1.halobear.com/wedding/FjCONFHbDclQIs8yNIvInLwDqEgP.png)
-![avatar](https://img1.halobear.com/wedding/FirgPeDCW--xGue2ROWrHDjgfsXi.png)
+<img src="https://img1.halobear.com/wedding/FkGM0Uc9SegxzeyaJ0Vg28D404vg.png" width="700">
+<img src="https://img1.halobear.com/wedding/FjCONFHbDclQIs8yNIvInLwDqEgP.png" width="700">
+<img src="https://img1.halobear.com/wedding/FirgPeDCW--xGue2ROWrHDjgfsXi.png" width="700">
