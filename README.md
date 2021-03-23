@@ -32,6 +32,6 @@ b,c,d 晚上吃了烧烤
 
 ### 应用截图
 
-<img src="https://img1.halobear.com/wedding/FkGM0Uc9SegxzeyaJ0Vg28D404vg.png" width="700">
-<img src="https://img1.halobear.com/wedding/FjCONFHbDclQIs8yNIvInLwDqEgP.png" width="700">
-<img src="https://img1.halobear.com/wedding/FirgPeDCW--xGue2ROWrHDjgfsXi.png" width="700">
+<img src="https://img1.halobear.com/wedding/FkGM0Uc9SegxzeyaJ0Vg28D404vg.png" width="300">
+<img src="https://img1.halobear.com/wedding/FjCONFHbDclQIs8yNIvInLwDqEgP.png" width="300">
+<img src="https://img1.halobear.com/wedding/FirgPeDCW--xGue2ROWrHDjgfsXi.png" width="300">
