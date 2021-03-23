@@ -1,51 +1,74 @@
 <template>
   <div class="icon-wrap">
-    <PlusSquareOutlined
-      style="font-size: 2rem"
+    <a-button
+      class="btn"
+      type="primary"
       @click="
-        form.push({
+        form.data.push({
           key: ~~(Math.random() * 100000),
-          name: `使用者${form.length + 1}`,
+          part: [],
         })
       "
-    />
+      >添加</a-button
+    >
   </div>
-  <a-form layout="horizontal" :model="form" v-bind="formItemLayout">
-    <div v-for="(it, i) in form" :key="it.key" class="item">
-      <a-form-item class="form-item" label="消费人">
+  <a-form :model="form" ref="submitForm" v-bind="formItemLayout">
+    <div v-for="(it, i) in form.data" :key="it.key" class="item">
+      <a-form-item
+        class="form-item"
+        label="消费人"
+        :name="['data', i, 'coster']"
+        :rules="{ required: true, message: '请选择', type: 'number' }"
+      >
         <a-select
           placeholder="请选择"
-          v-model:value="form[i].coster"
-          @change="$emit('update:modelValue', form)"
+          v-model:value="it.coster"
+          @change="$emit('update:modelValue', form.data)"
         >
           <a-select-option v-for="it in userList" :key="it.key">{{
             it.name
           }}</a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item class="form-item" label="金额">
+      <a-form-item
+        class="form-item"
+        label="金额"
+        :name="['data', i, 'cost']"
+        :rules="{ required: true, message: '请输入' }"
+      >
         <a-input
           type="number"
           placeholder="请输入"
-          v-model:value="form[i].cost"
-          @change="$emit('update:modelValue', form)"
+          v-model:value="it.cost"
+          @change="$emit('update:modelValue', form.data)"
         />
       </a-form-item>
-      <a-form-item class="form-item" label="参与人">
+      <a-form-item
+        class="form-item"
+        label="参与人"
+        :name="['data', i, 'part']"
+        :rules="{
+          required: true,
+          message: '请选择',
+          type: 'array',
+          trigger: ['change', 'blur'],
+        }"
+      >
         <div class="between-flex middle-flex">
           <a-select
             placeholder="请选择"
-            v-model:value="form[i].part"
+            v-model:value="it.part"
             mode="multiple"
-            @change="$emit('update:modelValue', form)"
+            @change="$emit('update:modelValue', form.data)"
           >
             <a-select-option v-for="it in userList" :key="it.key">{{
               it.name
             }}</a-select-option>
           </a-select>
           <DeleteOutlined
+            v-if="form.data.length !== 1"
             class="delete center-flex"
-            @click="form.splice(i, 1)"
+            @click="form.data.splice(i, 1)"
           />
         </div>
       </a-form-item>
@@ -54,12 +77,11 @@
 </template>
 
 <script>
-import { computed } from "@vue/runtime-core";
-import { DeleteOutlined, PlusSquareOutlined } from "@ant-design/icons-vue";
+import { computed, ref } from "vue";
+import { DeleteOutlined } from "@ant-design/icons-vue";
 export default {
   components: {
     DeleteOutlined,
-    PlusSquareOutlined,
   },
   props: {
     modelValue: { type: Array, default: () => [] },
@@ -67,15 +89,29 @@ export default {
   },
   setup(props, { emit }) {
     const form = computed({
-      get: () => props.modelValue,
-      set: (val) => emit("update:modelValue", val),
+      get: () => ({ data: props.modelValue }),
+      set: (val) => emit("update:modelValue", val.data),
     });
+    const submitForm = ref(null);
+    const onSubmit = async () => {
+      return await submitForm.value
+        .validate()
+        .then(() => {
+          return true;
+        })
+        .catch((error) => {
+          console.log("error", error);
+          return false;
+        });
+    };
     return {
       form,
       formItemLayout: {
         labelCol: { span: 4 },
         wrapperCol: { span: 20 },
       },
+      onSubmit,
+      submitForm,
     };
   },
 };
@@ -84,12 +120,16 @@ export default {
 <style lang="less" scoped>
 .icon-wrap {
   text-align: left;
-  svg {
-    width: 100%;
-    height: 100%;
+  .btn {
+    margin: 10px 0;
   }
 }
 .item {
+  padding: 10px 0;
+  border-bottom: 1px solid #efefef;
+  &:last-child {
+    border-bottom: none;
+  }
   .form-item {
     flex: 1;
   }
@@ -97,5 +137,8 @@ export default {
 .delete {
   width: 30px;
   height: 30px;
+}
+/deep/ .ant-form-item {
+  margin-bottom: 10px;
 }
 </style>

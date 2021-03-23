@@ -1,15 +1,14 @@
 <template>
   <div class="main">
-    <h1>算账管理</h1>
-    <a-steps :current="current" direction="vertical">
-      <a-step title="选择参与人">
-        <!-- <span slot="title">Finished</span> -->
-      </a-step>
+    <h1>多人账本 V1.0.0</h1>
+    <a-steps class="steps" :current="current" direction="vertical" size="small">
+      <a-step title="选择参与人"> </a-step>
       <a-step title="消费金额统计" />
-      <a-step title="计算结果" />
+      <a-step title="结果" />
     </a-steps>
     <dynamic-form v-if="current === 0" v-model="userList"></dynamic-form>
     <dynamic-form-cost
+      ref="costForm"
       v-if="current === 1"
       :userList="userList"
       v-model="form"
@@ -20,11 +19,13 @@
       :res="res"
       :userList="userList"
     ></res-output>
+  </div>
+  <div class="btn-group">
     <a-button
       v-if="current !== 0"
       style="margin-left: 20px"
       size="large"
-      @click="current -= 1"
+      @click="toPrev"
       >上一步</a-button
     >
     <a-button
@@ -33,7 +34,7 @@
       style="margin-left: 20px"
       size="large"
       type="primary"
-      @click="current += 1"
+      @click="toNext"
       >下一步</a-button
     >
     <a-button
@@ -62,12 +63,38 @@ export default {
     ResOutput,
   },
   setup() {
-    const form = ref([{ key: 1 }]);
+    const form = ref([{ key: 1, part: [] }]);
     const userList = ref([{ key: 1, name: "使用者1" }]);
     const current = ref(0);
     const total = ref(0);
     const res = ref({});
-    const onSubmit = () => {
+    // ref使用，记得return
+    const costForm = ref();
+
+    const toNext = () => {
+      current.value += 1;
+      // 数组去重和无效值
+      const userNameMap = userList.value.reduce((all, item) => {
+        all[item.name] = item.key;
+        return all;
+      }, {});
+      userList.value = userList.value.filter(
+        (it) => it.name && Object.values(userNameMap).includes(it.key)
+      );
+      // 金额统计去除无效值
+      form.value.forEach((it) => {
+        if (it.part && it.part.length) {
+          const userKeyList = userList.value.map((it) => it.key);
+          it.part = it.part.filter((i) => userKeyList.includes(i));
+        }
+      });
+    };
+    const toPrev = () => {
+      current.value -= 1;
+    };
+    const onSubmit = async () => {
+      // 表单校验
+      if (!(await costForm.value.onSubmit())) return;
       const d = [...form.value];
       res.value = userList.value.reduce((all, item) => {
         all[item.key] = 0;
@@ -78,34 +105,55 @@ export default {
         item.part.forEach((it) => {
           res.value[it] += average;
         });
-        res.value[item.coster] -= item.cost;
-        all += item.cost;
+        res.value[item.coster] -= Number(item.cost);
+        all += Number(item.cost);
         return all;
       }, 0);
-      console.log(res.value);
       current.value += 1;
       total.value = totalCost;
     };
     return {
+      costForm,
       form,
       current,
       userList,
       onSubmit,
       total,
       res,
+      toNext,
+      toPrev,
     };
   },
 };
 </script>
 
-<style>
+<style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 20px;
-  padding: 0 20px;
+  padding: 20px;
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.ant-steps-vertical .ant-steps-item {
+  display: inline-block;
+}
+.ant-steps-vertical
+  > .ant-steps-item
+  > .ant-steps-item-container
+  > .ant-steps-item-tail {
+  height: 0;
+}
+.ant-form-item-label {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

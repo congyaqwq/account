@@ -1,10 +1,14 @@
 <template>
-  <div class="icon-wrap">
-    <PlusSquareOutlined style="font-size: 2rem" @click="add" />
+  <div class="icon-wrap between-flex middle-flex">
+    <a-button class="btn" type="primary" @click="add">添加</a-button>
+    <a-radio-group v-model:value="autoInsert">
+      <a-radio-button :value="1">自动填充</a-radio-button>
+      <a-radio-button :value="0">关闭自动填充</a-radio-button>
+    </a-radio-group>
   </div>
-  <a-form layout="horizontal" :model="form" v-bind="formItemLayout">
+  <a-form :model="form" v-bind="formItemLayout">
     <div
-      v-for="(it, i) in modelValue"
+      v-for="(it, i) in form"
       :key="it.key"
       class="item middle-flex between-flex"
     >
@@ -13,9 +17,10 @@
           <a-input
             placeholder="请输入"
             v-model:value="form[i].name"
-            @change="$emit('update:modelValue', form)"
+            @change="change(form)"
           />
           <DeleteOutlined
+            v-if="form.length !== 1"
             class="delete center-flex"
             @click="form.splice(i, 1)"
           />
@@ -26,32 +31,36 @@
 </template>
 
 <script>
-import { computed } from "@vue/runtime-core";
-import { DeleteOutlined, PlusSquareOutlined } from "@ant-design/icons-vue";
+import { computed, ref } from "vue";
+import { DeleteOutlined } from "@ant-design/icons-vue";
 export default {
   components: {
     DeleteOutlined,
-    PlusSquareOutlined,
   },
   props: {
     modelValue: Array,
     default: () => [],
   },
   setup(props, { emit }) {
+    const index = ref(1);
+    const autoInsert = ref(1);
     const form = computed({
       get: () => {
         return props.modelValue;
       },
       set: (val) => {
-        emit("update:modelValue", val);
+        change(val);
       },
     });
+    const change = (val) => {
+      emit("update:modelValue", val);
+    };
     const add = () => {
       form.value = [
         ...form.value,
         {
           key: ~~(Math.random() * 100000),
-          name: `使用者${form.value.length + 1}`,
+          name: autoInsert.value ? `使用者${++index.value}` : "",
         },
       ];
     };
@@ -62,6 +71,8 @@ export default {
         wrapperCol: { span: 20 },
       },
       add,
+      autoInsert,
+      change,
     };
   },
 };
@@ -69,13 +80,16 @@ export default {
 
 <style lang="less" scoped>
 .icon-wrap {
-  text-align: left;
-  svg {
-    width: 100%;
-    height: 100%;
+  .btn {
+    margin: 10px 0;
   }
 }
 .item {
+  padding: 10px 0;
+  border-bottom: 1px solid #efefef;
+  &:last-child {
+    border-bottom: none;
+  }
   .form-item {
     flex: 1;
   }
@@ -83,5 +97,8 @@ export default {
 .delete {
   width: 30px;
   height: 30px;
+}
+/deep/ .ant-form-item {
+  margin-bottom: 10px;
 }
 </style>

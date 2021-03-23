@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <h2>总消费：{{ total }}</h2>
-    <div class="item flex" v-for="(value, key) in res" :key="key">
+  <h2>总消费：{{ total }}</h2>
+  <div class="res-output">
+    <div class="item center-flex" v-for="(value, key) in res" :key="key">
       <div class="name">{{ userMap[key] }}</div>
       <div class="price">
-        {{ value > 0 ? "出" : "获" }}{{ Math.abs(value) }}元
+        <b>{{ value > 0 ? "出" : "获" }}</b>
       </div>
+      <div>{{ Math.abs(value) }}元</div>
     </div>
   </div>
 </template>
@@ -41,5 +42,11 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+.res-output {
+  font-size: 20px;
+}
+.price {
+  margin: 0 20px;
+}
 </style>
