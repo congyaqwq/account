@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <h1>多人账本 V1.0.0</h1>
+    <h1>多人账单 V1.0.0</h1>
     <a-steps class="steps" :current="current" direction="vertical" size="small">
       <a-step title="选择参与人"> </a-step>
       <a-step title="消费金额统计" />

@@ -6,7 +6,7 @@
       <div class="price">
         <b>{{ value > 0 ? "出" : "获" }}</b>
       </div>
-      <div>{{ Math.abs(value) }}元</div>
+      <div>{{ Math.abs(value).toFixed(2) }}元</div>
     </div>
   </div>
 </template>
