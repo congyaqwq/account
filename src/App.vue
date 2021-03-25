@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <h1>多人账单 V1.0.0</h1>
+    <h1>多人账单 V1.0.1</h1>
     <a-steps class="steps" :current="current" direction="vertical" size="small">
       <a-step title="选择参与人"> </a-step>
       <a-step title="消费金额统计" />
@@ -127,19 +127,23 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style >
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  padding: 20px;
   text-align: center;
   display: flex;
+  padding: 20px;
   justify-content: space-between;
   flex-direction: column;
   min-height: 100vh;
   box-sizing: border-box;
+}
+.steps {
+  margin: 0 -20px;
+  width: auto;
 }
 .ant-steps-vertical .ant-steps-item {
   display: inline-block;

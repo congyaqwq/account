@@ -16,6 +16,7 @@
         <div class="middle-flex">
           <a-input
             placeholder="请输入"
+            allowClear
             v-model:value="form[i].name"
             @change="change(form)"
           />

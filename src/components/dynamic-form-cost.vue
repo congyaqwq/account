@@ -39,6 +39,7 @@
         <a-input
           type="number"
           placeholder="请输入"
+          allowClear
           v-model:value="it.cost"
           @change="$emit('update:modelValue', form.data)"
         />
