@@ -1,34 +1,36 @@
 <template>
-  <div class="icon-wrap between-flex middle-flex">
-    <a-button class="btn" type="primary" @click="add">添加</a-button>
-    <a-radio-group v-model:value="autoInsert">
-      <a-radio-button :value="1">自动填充</a-radio-button>
-      <a-radio-button :value="0">关闭自动填充</a-radio-button>
-    </a-radio-group>
-  </div>
-  <a-form :model="form" v-bind="formItemLayout">
-    <div
-      v-for="(it, i) in form"
-      :key="it.key"
-      class="item middle-flex between-flex"
-    >
-      <a-form-item class="form-item" label="名字">
-        <div class="middle-flex">
-          <a-input
-            placeholder="请输入"
-            allowClear
-            v-model:value="form[i].name"
-            @change="change(form)"
-          />
-          <DeleteOutlined
-            v-if="form.length !== 1"
-            class="delete center-flex"
-            @click="form.splice(i, 1)"
-          />
-        </div>
-      </a-form-item>
+  <div>
+    <div class="icon-wrap between-flex middle-flex">
+      <a-button class="btn" type="primary" @click="add">添加</a-button>
+      <a-radio-group v-model:value="autoInsert">
+        <a-radio-button :value="1">自动填充</a-radio-button>
+        <a-radio-button :value="0">关闭自动填充</a-radio-button>
+      </a-radio-group>
     </div>
-  </a-form>
+    <a-form :model="form" v-bind="formItemLayout">
+      <div
+        v-for="(it, i) in form"
+        :key="it.key"
+        class="item middle-flex between-flex"
+      >
+        <a-form-item class="form-item" label="名字">
+          <div class="middle-flex">
+            <a-input
+              placeholder="请输入"
+              allowClear
+              v-model:value="form[i].name"
+              @change="change(form)"
+            />
+            <DeleteOutlined
+              v-if="form.length !== 1"
+              class="delete center-flex"
+              @click="form.splice(i, 1)"
+            />
+          </div>
+        </a-form-item>
+      </div>
+    </a-form>
+  </div>
 </template>
 
 <script>

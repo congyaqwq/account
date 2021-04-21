@@ -1,56 +1,59 @@
 <template>
   <div class="main">
-    <h1>多人账单 V1.0.1</h1>
+    <h1>多人账单 {{ version }}</h1>
     <a-steps class="steps" :current="current" direction="vertical" size="small">
       <a-step title="选择参与人"> </a-step>
       <a-step title="消费金额统计" />
       <a-step title="结果" />
     </a-steps>
-    <dynamic-form v-if="current === 0" v-model="userList"></dynamic-form>
-    <dynamic-form-cost
-      ref="costForm"
-      v-if="current === 1"
-      :userList="userList"
-      v-model="form"
-    ></dynamic-form-cost>
-    <res-output
-      v-if="current === 2"
-      :total="total"
-      :res="res"
-      :userList="userList"
-    ></res-output>
-  </div>
-  <div class="btn-group">
-    <a-button
-      v-if="current !== 0"
-      style="margin-left: 20px"
-      size="large"
-      @click="toPrev"
-      >上一步</a-button
-    >
-    <a-button
-      key="current"
-      v-if="current === 0"
-      style="margin-left: 20px"
-      size="large"
-      type="primary"
-      @click="toNext"
-      >下一步</a-button
-    >
-    <a-button
-      key="current"
-      v-if="current == 1"
-      style="margin-left: 20px"
-      size="large"
-      type="primary"
-      @click="onSubmit"
-      >下一步</a-button
-    >
+    <div class="content column-flex">
+      <dynamic-form v-show="current === 0" v-model="userList"></dynamic-form>
+      <dynamic-form-cost
+        ref="costForm"
+        v-if="current === 1"
+        :userList="userList"
+        v-model="form"
+      ></dynamic-form-cost>
+      <res-output
+        v-if="current === 2"
+        :total="total"
+        :res="res"
+        :userList="userList"
+      ></res-output>
+      <div class="btn-group">
+        <a-button
+          v-if="current !== 0"
+          style="margin-left: 20px"
+          size="large"
+          @click="toPrev"
+          >上一步</a-button
+        >
+        <a-button
+          key="current"
+          v-if="current === 0"
+          style="margin-left: 20px"
+          size="large"
+          type="primary"
+          @click="toNext"
+          >下一步</a-button
+        >
+        <a-button
+          key="current"
+          v-if="current == 1"
+          style="margin-left: 20px"
+          size="large"
+          type="primary"
+          @click="onSubmit"
+          >下一步</a-button
+        >
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
+import { version } from "./config/index";
 import DynamicForm from "./components/dynamic-form.vue";
 import DynamicFormCost from "./components/dynamic-form-cost.vue";
 import ResOutput from "./components/res-output.vue";
@@ -122,6 +125,7 @@ export default {
       res,
       toNext,
       toPrev,
+      version,
     };
   },
 };
@@ -145,6 +149,11 @@ export default {
   margin: 0 -20px;
   width: auto;
 }
+.content {
+  justify-content: space-between;
+  min-height: 70vh;
+}
+
 .ant-steps-vertical .ant-steps-item {
   display: inline-block;
 }

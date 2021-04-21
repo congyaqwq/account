@@ -1,80 +1,82 @@
 <template>
-  <div class="icon-wrap">
-    <a-button
-      class="btn"
-      type="primary"
-      @click="
-        form.data.push({
-          key: ~~(Math.random() * 100000),
-          part: [],
-        })
-      "
-      >添加</a-button
-    >
-  </div>
-  <a-form :model="form" ref="submitForm" v-bind="formItemLayout">
-    <div v-for="(it, i) in form.data" :key="it.key" class="item">
-      <a-form-item
-        class="form-item"
-        label="消费人"
-        :name="['data', i, 'coster']"
-        :rules="{ required: true, message: '请选择', type: 'number' }"
+  <div>
+    <div class="icon-wrap">
+      <a-button
+        class="btn"
+        type="primary"
+        @click="
+          form.data.push({
+            key: ~~(Math.random() * 100000),
+            part: [],
+          })
+        "
+        >添加</a-button
       >
-        <a-select
-          placeholder="请选择"
-          v-model:value="it.coster"
-          @change="$emit('update:modelValue', form.data)"
+    </div>
+    <a-form :model="form" ref="submitForm" v-bind="formItemLayout">
+      <div v-for="(it, i) in form.data" :key="it.key" class="item">
+        <a-form-item
+          class="form-item"
+          label="消费人"
+          :name="['data', i, 'coster']"
+          :rules="{ required: true, message: '请选择', type: 'number' }"
         >
-          <a-select-option v-for="it in userList" :key="it.key">{{
-            it.name
-          }}</a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item
-        class="form-item"
-        label="金额"
-        :name="['data', i, 'cost']"
-        :rules="{ required: true, message: '请输入' }"
-      >
-        <a-input
-          type="number"
-          placeholder="请输入"
-          allowClear
-          v-model:value="it.cost"
-          @change="$emit('update:modelValue', form.data)"
-        />
-      </a-form-item>
-      <a-form-item
-        class="form-item"
-        label="参与人"
-        :name="['data', i, 'part']"
-        :rules="{
-          required: true,
-          message: '请选择',
-          type: 'array',
-          trigger: ['change', 'blur'],
-        }"
-      >
-        <div class="between-flex middle-flex">
           <a-select
             placeholder="请选择"
-            v-model:value="it.part"
-            mode="multiple"
+            v-model:value="it.coster"
             @change="$emit('update:modelValue', form.data)"
           >
             <a-select-option v-for="it in userList" :key="it.key">{{
               it.name
             }}</a-select-option>
           </a-select>
-          <DeleteOutlined
-            v-if="form.data.length !== 1"
-            class="delete center-flex"
-            @click="form.data.splice(i, 1)"
+        </a-form-item>
+        <a-form-item
+          class="form-item"
+          label="金额"
+          :name="['data', i, 'cost']"
+          :rules="{ required: true, message: '请输入' }"
+        >
+          <a-input
+            type="number"
+            placeholder="请输入"
+            allowClear
+            v-model:value="it.cost"
+            @change="$emit('update:modelValue', form.data)"
           />
-        </div>
-      </a-form-item>
-    </div>
-  </a-form>
+        </a-form-item>
+        <a-form-item
+          class="form-item"
+          label="参与人"
+          :name="['data', i, 'part']"
+          :rules="{
+            required: true,
+            message: '请选择',
+            type: 'array',
+            trigger: ['change', 'blur'],
+          }"
+        >
+          <div class="between-flex middle-flex">
+            <a-select
+              placeholder="请选择"
+              v-model:value="it.part"
+              mode="multiple"
+              @change="$emit('update:modelValue', form.data)"
+            >
+              <a-select-option v-for="it in userList" :key="it.key">{{
+                it.name
+              }}</a-select-option>
+            </a-select>
+            <DeleteOutlined
+              v-if="form.data.length !== 1"
+              class="delete center-flex"
+              @click="form.data.splice(i, 1)"
+            />
+          </div>
+        </a-form-item>
+      </div>
+    </a-form>
+  </div>
 </template>
 
 <script>
