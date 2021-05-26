@@ -1,0 +1,1 @@
+scp -r ./dist/* aliyun:/var/www/nginx/project/account/

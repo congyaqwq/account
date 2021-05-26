@@ -29,7 +29,7 @@ export default {
       return arr.indexOf(target);
     };
     const strJoin = (payMan, getMan, amount) => {
-      resStr += `<div class="row"><strong>${payMan}</strong> 给 <strong>${getMan}</strong>转账<strong>${amount}</strong>元</div>`;
+      resStr += `<div class="row"><strong>${payMan}</strong> 给 <strong>${getMan}</strong>转账<strong>${amount.toFixed(2)}</strong>元</div>`;
     };
     const getRes = (arr) => {
       if (arr.every((it) => it.val < 0.01)) return;
