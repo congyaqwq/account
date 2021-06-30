@@ -1,33 +1,18 @@
 <template>
   <div class="main">
     <h1>多人账单 {{ version }}</h1>
+    <p class="danger">最近更新：手机端浏览器可添加至桌面图标</p>
     <a-steps class="steps" :current="current" direction="vertical" size="small">
-      <a-step title="选择参与人"> </a-step>
+      <a-step title="选择参与人"></a-step>
       <a-step title="消费金额统计" />
       <a-step title="结果" />
     </a-steps>
     <div class="content column-flex">
       <dynamic-form v-show="current === 0" v-model="userList"></dynamic-form>
-      <dynamic-form-cost
-        ref="costForm"
-        v-if="current === 1"
-        :userList="userList"
-        v-model="form"
-      ></dynamic-form-cost>
-      <res-output
-        v-if="current === 2"
-        :total="total"
-        :res="res"
-        :userList="userList"
-      ></res-output>
+      <dynamic-form-cost ref="costForm" v-if="current === 1" :userList="userList" v-model="form"></dynamic-form-cost>
+      <res-output v-if="current === 2" :total="total" :res="res" :userList="userList"></res-output>
       <div class="btn-group">
-        <a-button
-          v-if="current !== 0"
-          style="margin-left: 20px"
-          size="large"
-          @click="toPrev"
-          >上一步</a-button
-        >
+        <a-button v-if="current !== 0" style="margin-left: 20px" size="large" @click="toPrev">上一步</a-button>
         <a-button
           key="current"
           v-if="current === 0"
@@ -35,8 +20,7 @@
           size="large"
           type="primary"
           @click="toNext"
-          >下一步</a-button
-        >
+        >下一步</a-button>
         <a-button
           key="current"
           v-if="current == 1"
@@ -44,8 +28,7 @@
           size="large"
           type="primary"
           @click="onSubmit"
-          >下一步</a-button
-        >
+        >下一步</a-button>
       </div>
     </div>
   </div>
@@ -144,6 +127,9 @@ export default {
   flex-direction: column;
   min-height: 100vh;
   box-sizing: border-box;
+}
+.danger {
+  color: crimson;
 }
 .steps {
   margin: 0 -20px;
