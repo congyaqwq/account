@@ -8,24 +8,11 @@
       </a-radio-group>
     </div>
     <a-form :model="form" v-bind="formItemLayout">
-      <div
-        v-for="(it, i) in form"
-        :key="it.key"
-        class="item middle-flex between-flex"
-      >
+      <div v-for="(it, i) in form" :key="it.key" class="item middle-flex between-flex">
         <a-form-item class="form-item" label="名字">
           <div class="middle-flex">
-            <a-input
-              placeholder="请输入"
-              allowClear
-              v-model:value="form[i].name"
-              @change="change(form)"
-            />
-            <DeleteOutlined
-              v-if="form.length !== 1"
-              class="delete center-flex"
-              @click="form.splice(i, 1)"
-            />
+            <a-input placeholder="请输入" allowClear v-model:value="form[i].name" @change="change(form)" />
+            <DeleteOutlined v-if="form.length !== 1" class="delete center-flex" @click="form.splice(i, 1)" />
           </div>
         </a-form-item>
       </div>
@@ -34,8 +21,8 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
-import { DeleteOutlined } from "@ant-design/icons-vue";
+import { computed, ref } from 'vue'
+import { DeleteOutlined } from '@ant-design/icons-vue'
 export default {
   components: {
     DeleteOutlined,
@@ -45,28 +32,28 @@ export default {
     default: () => [],
   },
   setup(props, { emit }) {
-    const index = ref(1);
-    const autoInsert = ref(1);
+    const index = ref(1)
+    const autoInsert = ref(1)
     const form = computed({
       get: () => {
-        return props.modelValue;
+        return props.modelValue
       },
       set: (val) => {
-        change(val);
+        change(val)
       },
-    });
+    })
     const change = (val) => {
-      emit("update:modelValue", val);
-    };
+      emit('update:modelValue', val)
+    }
     const add = () => {
       form.value = [
         ...form.value,
         {
           key: ~~(Math.random() * 100000),
-          name: autoInsert.value ? `使用者${++index.value}` : "",
+          name: autoInsert.value ? `使用者${++index.value}` : '',
         },
-      ];
-    };
+      ]
+    }
     return {
       form,
       formItemLayout: {
@@ -76,9 +63,9 @@ export default {
       add,
       autoInsert,
       change,
-    };
+    }
   },
-};
+}
 </script>
 
 <style lang="less" scoped>
@@ -103,5 +90,9 @@ export default {
 }
 /deep/ .ant-form-item {
   margin-bottom: 10px;
+}
+/deep/ .ant-form-item-label {
+  /* padding: 0; */
+  line-height: 32px;
 }
 </style>

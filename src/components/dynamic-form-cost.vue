@@ -21,14 +21,8 @@
           :name="['data', i, 'coster']"
           :rules="{ required: true, message: '请选择', type: 'number' }"
         >
-          <a-select
-            placeholder="请选择"
-            v-model:value="it.coster"
-            @change="$emit('update:modelValue', form.data)"
-          >
-            <a-select-option v-for="it in userList" :key="it.key">{{
-              it.name
-            }}</a-select-option>
+          <a-select placeholder="请选择" v-model:value="it.coster" @change="$emit('update:modelValue', form.data)">
+            <a-select-option v-for="it in userList" :key="it.key">{{ it.name }}</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item
@@ -56,22 +50,15 @@
             trigger: ['change', 'blur'],
           }"
         >
-          <div class="between-flex middle-flex">
-            <a-select
-              placeholder="请选择"
+          <div class="between-flex middle-flex check-box">
+            <a-checkbox-group
               v-model:value="it.part"
-              mode="multiple"
+              :options="computedUserList"
               @change="$emit('update:modelValue', form.data)"
             >
-              <a-select-option v-for="it in userList" :key="it.key">{{
-                it.name
-              }}</a-select-option>
-            </a-select>
-            <DeleteOutlined
-              v-if="form.data.length !== 1"
-              class="delete center-flex"
-              @click="form.data.splice(i, 1)"
-            />
+              <!-- <a-select-option v-for="it in userList" :key="it.key">{{ it.name }}</a-select-option> -->
+            </a-checkbox-group>
+            <DeleteOutlined v-if="form.data.length !== 1" class="delete center-flex" @click="form.data.splice(i, 1)" />
           </div>
         </a-form-item>
       </div>
@@ -80,8 +67,8 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
-import { DeleteOutlined } from "@ant-design/icons-vue";
+import { computed, ref } from 'vue'
+import { DeleteOutlined } from '@ant-design/icons-vue'
 export default {
   components: {
     DeleteOutlined,
@@ -93,20 +80,23 @@ export default {
   setup(props, { emit }) {
     const form = computed({
       get: () => ({ data: props.modelValue }),
-      set: (val) => emit("update:modelValue", val.data),
-    });
-    const submitForm = ref(null);
+      set: (val) => emit('update:modelValue', val.data),
+    })
+    const submitForm = ref(null)
+    const computedUserList = computed(() => {
+      return props.userList.map((it) => ({ label: it.name, value: it.key }))
+    })
     const onSubmit = async () => {
       return await submitForm.value
         .validate()
         .then(() => {
-          return true;
+          return true
         })
         .catch((error) => {
-          console.log("error", error);
-          return false;
-        });
-    };
+          console.log('error', error)
+          return false
+        })
+    }
     return {
       form,
       formItemLayout: {
@@ -115,9 +105,10 @@ export default {
       },
       onSubmit,
       submitForm,
-    };
+      computedUserList,
+    }
   },
-};
+}
 </script>
 
 <style lang="less" scoped>
@@ -138,10 +129,18 @@ export default {
   }
 }
 .delete {
+  align-self: end;
   width: 30px;
   height: 30px;
 }
 /deep/ .ant-form-item {
   margin-bottom: 10px;
+}
+.check-box {
+  min-height: 40px;
+  margin-bottom: 10px;
+}
+/deep/ .ant-checkbox-group-item {
+  margin: 5px;
 }
 </style>
