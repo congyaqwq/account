@@ -1,4 +1,4 @@
-# account 多人账单计算
+# account 多人消费计算
 
 ## Project setup
 
