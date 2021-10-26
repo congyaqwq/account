@@ -1,4 +1,5 @@
 # account 多人消费计算
+![](https://komarev.com/ghpvc/?username=your-github-username)
 
 ## Project setup
 
