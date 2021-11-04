@@ -20,6 +20,9 @@ yarn serve
 
 [在线地址](https://www.congyaqwq.top/account/)
 
+### 新增小程序版本，欢迎支持
+![paofu](https://user-images.githubusercontent.com/45482161/140294846-b4e10805-ad95-410c-bc92-ce6a5b9071a7.png)
+
 ### 更新
 
 V1.1.1 2021-04-21
@@ -30,6 +33,7 @@ feat: 可添加到手机桌面离线使用
 
 V1.1.3 2021-07-28
 feat: 使用之后保存到本地缓存，UI 优化
+
 
 ### 应用场景
 
