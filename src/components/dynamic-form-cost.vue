@@ -19,10 +19,16 @@
           class="form-item"
           label="消费人"
           :name="['data', i, 'coster']"
-          :rules="{ required: true, message: '请选择', type: 'number' }"
+          :rules="{ required: true, message: '请选择', type: 'string' }"
         >
-          <a-select placeholder="请选择" v-model:value="it.coster" @change="$emit('update:modelValue', form.data)">
-            <a-select-option v-for="it in userList" :key="it.key">{{ it.name }}</a-select-option>
+          <a-select
+            placeholder="请选择"
+            v-model:value="it.coster"
+            @change="$emit('update:modelValue', form.data)"
+          >
+            <a-select-option v-for="it in userList" :key="it.key">{{
+              it.name
+            }}</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item
@@ -58,7 +64,11 @@
             >
               <!-- <a-select-option v-for="it in userList" :key="it.key">{{ it.name }}</a-select-option> -->
             </a-checkbox-group>
-            <DeleteOutlined v-if="form.data.length !== 1" class="delete center-flex" @click="form.data.splice(i, 1)" />
+            <DeleteOutlined
+              v-if="form.data.length !== 1"
+              class="delete center-flex"
+              @click="form.data.splice(i, 1)"
+            />
           </div>
         </a-form-item>
       </div>
@@ -67,8 +77,8 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
-import { DeleteOutlined } from '@ant-design/icons-vue'
+import { computed, ref } from "vue";
+import { DeleteOutlined } from "@ant-design/icons-vue";
 export default {
   components: {
     DeleteOutlined,
@@ -80,23 +90,23 @@ export default {
   setup(props, { emit }) {
     const form = computed({
       get: () => ({ data: props.modelValue }),
-      set: (val) => emit('update:modelValue', val.data),
-    })
-    const submitForm = ref(null)
+      set: (val) => emit("update:modelValue", val.data),
+    });
+    const submitForm = ref(null);
     const computedUserList = computed(() => {
-      return props.userList.map((it) => ({ label: it.name, value: it.key }))
-    })
+      return props.userList.map((it) => ({ label: it.name, value: it.key }));
+    });
     const onSubmit = async () => {
       return await submitForm.value
         .validate()
         .then(() => {
-          return true
+          return true;
         })
         .catch((error) => {
-          console.log('error', error)
-          return false
-        })
-    }
+          console.log("error", error);
+          return false;
+        });
+    };
     return {
       form,
       formItemLayout: {
@@ -106,9 +116,9 @@ export default {
       onSubmit,
       submitForm,
       computedUserList,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="less" scoped>
