@@ -34,7 +34,6 @@ export default {
     const getRes = (arr) => {
       if (arr.every((it) => it.val < 0.01)) return;
       if (!arr || !arr.length) return;
-      console.log(arr, 1);
       arr.forEach((it, i) => {
         const index = minSub(it.val, receive);
         if (index == -1) return;

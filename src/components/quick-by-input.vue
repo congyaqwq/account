@@ -1,12 +1,19 @@
 <template>
   <div class="hello">
-    <a-textarea
-      :value="text"
-      rows="2"
-      @change="text = $event.target.value"
-    ></a-textarea>
-    <a-button @click="getData" :disabled="isLoading">一键计算，建议使用文字转语音</a-button>
-    <div v-show="isLoading">Loading...</div>
+    <a-button @click="handleChangeVisible">
+      文本转换
+    </a-button>
+    <a-modal v-model:visible="visible" title="提示" @ok="getData" :okButtonProps="{ disabled: isLoading || !text, text: '一键计算' }">
+      <a-textarea
+        :value="text"
+        rows="10"
+        @change="text = $event.target.value"
+      ></a-textarea>
+      <!-- <a-button @click="getData" :disabled="isLoading || !text"
+        >一键计算，建议使用文字转语音</a-button
+      > -->
+      <div v-show="isLoading">Loading...</div>
+    </a-modal>
   </div>
 </template>
 
@@ -19,9 +26,14 @@ export default {
     onAI: Function,
   },
   setup(props) {
-    console.log(props,'props')
     const text = ref("");
+    const visible = ref(false);
     const isLoading = ref(false);
+
+    function  handleChangeVisible() {
+      visible.value = !visible.value;
+    }
+
     async function getData() {
       isLoading.value = true;
       const res = await fetch("/api/gpt/workflows/run", {
@@ -37,14 +49,17 @@ export default {
           user: "Smart",
         }),
       });
-      const resData  = await res.json()
-      console.log(resData)
-      const { userList, costs, total } = JSON.parse(resData.data.outputs.result);
+      const resData = await res.json();
+      const { userList, costs, total } = JSON.parse(
+        resData.data.outputs.result
+      );
       props.onAI(userList, costs, total);
       isLoading.value = false;
       text.value = "";
     }
     return {
+      visible,
+      handleChangeVisible,
       text,
       getData,
       isLoading,
