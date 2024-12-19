@@ -3,7 +3,7 @@
         <h1>多人账单 {{ version }}</h1>
         <quick-by-input :onAI="handleByAI"></quick-by-input>
         <p class="danger">最近更新：手机端浏览器可添加至桌面图标</p>
-        <a-steps class="steps" :current="current"  size="small">
+        <a-steps class="steps" :current="current" size="small">
             <a-step title="选择参与人"></a-step>
             <a-step title="消费金额统计" />
             <a-step title="结果" />
@@ -143,12 +143,12 @@ export default {
 }
 
 .steps {
-    width: auto;
+    /* width: auto;
     display: flex !important;
 
     .ant-steps-item-tail {
         display: none;
-    }
+    } */
 }
 
 .content {

@@ -90,7 +90,10 @@ export default {
   setup(props, { emit }) {
     const form = computed({
       get: () => ({ data: props.modelValue }),
-      set: (val) => emit("update:modelValue", val.data),
+      set: (val) =>{
+        console.log(val)
+        emit("update:modelValue", val.data)
+      },
     });
     const submitForm = ref(null);
     const computedUserList = computed(() => {
@@ -143,14 +146,14 @@ export default {
   width: 30px;
   height: 30px;
 }
-/deep/ .ant-form-item {
+:deep(.ant-form-item) {
   margin-bottom: 10px;
 }
 .check-box {
   min-height: 40px;
   margin-bottom: 10px;
 }
-/deep/ .ant-checkbox-group-item {
+:deep(.ant-checkbox-group-item) {
   margin: 5px;
 }
 </style>

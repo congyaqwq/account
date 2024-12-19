@@ -88,10 +88,10 @@ export default {
   width: 30px;
   height: 30px;
 }
-/deep/ .ant-form-item {
+:deep(.ant-form-item) {
   margin-bottom: 10px;
 }
-/deep/ .ant-form-item-label {
+:deep(.ant-form-item-label) {
   /* padding: 0; */
   line-height: 32px;
 }
