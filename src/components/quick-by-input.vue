@@ -1,7 +1,7 @@
 <template>
   <div class="quick-input-container">
     <a-button @click="handleChangeVisible">
-      文本转换
+      AI 文本转换
     </a-button>
     <a-modal
       v-model:visible="visible"
@@ -58,7 +58,7 @@ export default {
     const modalTitle = "提示";
     const cancelText = "取消";
     const okText = "确认";
-    const placeholder = "请输入要转换的文本...";
+    const placeholder = "推荐使用语音输入";
 
     // Reactive state
     const text = ref("");

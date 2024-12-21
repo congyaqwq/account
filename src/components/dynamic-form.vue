@@ -49,7 +49,7 @@ export default {
       form.value = [
         ...form.value,
         {
-          key: ~~(Math.random() * 100000),
+          key: String(~~(Math.random() * 100000)),
           name: autoInsert.value ? `使用者${++index.value}` : '',
         },
       ]
