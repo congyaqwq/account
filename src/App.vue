@@ -76,7 +76,7 @@ export default {
     QuickByInput,
   },
   setup() {
-    const form = ref([{ key: 1, part: [] }]);
+    const form = ref([{ key: '1', part: [], mark: '' }]);
     const userList = ref([{ key: "1", name: "使用者1" }]);
     const current = ref(0);
     const total = ref(0);

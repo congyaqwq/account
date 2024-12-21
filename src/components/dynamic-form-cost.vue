@@ -6,8 +6,9 @@
         type="primary"
         @click="
           form.data.push({
-            key: ~~(Math.random() * 100000),
+            key: String(~~(Math.random() * 100000)),
             part: [],
+            mark: ''
           })
         "
         >添加</a-button
@@ -71,6 +72,19 @@
             />
           </div>
         </a-form-item>
+         <!-- <a-form-item
+          class="form-item"
+          label="备注"
+          :name="['data', i, 'mark']"
+        >
+          <a-input
+            type="text"
+            placeholder="请输入"
+            allowClear
+            v-model:value="it.mark"
+            @change="$emit('update:modelValue', form.data)"
+          />
+        </a-form-item> -->
       </div>
     </a-form>
   </div>
@@ -132,7 +146,7 @@ export default {
   }
 }
 .item {
-  padding: 10px 0;
+  padding: 2px 0;
   border-bottom: 1px solid #efefef;
   &:last-child {
     border-bottom: none;
@@ -147,7 +161,10 @@ export default {
   height: 30px;
 }
 :deep(.ant-form-item) {
-  margin-bottom: 10px;
+  margin-bottom: 4px;
+}
+:deep(.ant-form-item-label) {
+  padding-bottom: 2px !important;
 }
 .check-box {
   min-height: 40px;
